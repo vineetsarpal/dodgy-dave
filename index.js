@@ -46,8 +46,9 @@ async function fetchStockData() {
     document.querySelector('.action-panel').style.display = 'none'
     loadingArea.style.display = 'flex'
     try {
+        const polygon_api_worker = import.meta.env.VITE_POLYGON_API_WORKER_URL
         const stockData = await Promise.all(tickersArr.map(async (ticker) => {
-            const url = `https://polygon-api-worker.vineetsarpal02.workers.dev/?ticker=${ticker}&startDate=${dates.startDate}&endDate=${dates.endDate}`
+            const url = `${polygon_api_worker}?ticker=${ticker}&startDate=${dates.startDate}&endDate=${dates.endDate}`
             const response = await fetch(url)
             if (!response.ok) {
                 const errMsg = await response.text()
@@ -82,7 +83,7 @@ async function fetchReport(data) {
     ]
     
     try {
-        const url = 'https://openai-api-worker.vineetsarpal02.workers.dev/'
+        const url = import.meta.env.VITE_OPENAI_API_WORKER_URL
         
         const response = await fetch(url, {
             method: 'POST',
